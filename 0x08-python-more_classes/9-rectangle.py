@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-'''module: 5-rectangle
+'''module: 9-rectangle
 this module contains the class Rectangle ...
 '''
 
@@ -10,10 +10,34 @@ class Rectangle:
     this is an empty class, further additions in subsequent assignments
     '''
 
+    number_of_instances = 0
+    print_symbol = "#"
+
+    @classmethod
+    def square(cls, size=0):
+        '''class method: creates a square, which is a type of rectangle
+        '''
+        return cls(size, size)
+
+    @staticmethod
+    def bigger_or_equal(rect_1, rect_2):
+        '''static class method: bigger or equal
+        Return: boolean - true if rect_1 >= rect_2, based on area(?)
+        '''
+        if not isinstance(rect_1, Rectangle):
+            raise TypeError("rect_1 must be an instance of Rectangle")
+        if not isinstance(rect_2, Rectangle):
+            raise TypeError("rect_2 must be an instance of Rectangle")
+        if rect_1.area() >= rect_2.area():
+            return True
+        else:
+            return False
+
     def __init__(self, width=0, height=0):
         '''method: __init__
         initialize instance of class Rectangle
         '''
+        Rectangle.number_of_instances += 1
         self.__width = width
         self.__height = height
 
@@ -86,7 +110,7 @@ class Rectangle:
         if self.__height == 0 or self.__width == 0:
             return ""
         for idx in range(self.__height):
-            ret_str += '#' * self.width
+            ret_str += str(self.print_symbol) * self.width
             if idx + 1 < self.__height:
                 ret_str += '\n'
         return ret_str
@@ -104,4 +128,5 @@ class Rectangle:
         '''method: __del__
            deletes instance of Rectangle class, and prints "bye" message
         '''
+        Rectangle.number_of_instances -= 1
         print("Bye rectangle...")
